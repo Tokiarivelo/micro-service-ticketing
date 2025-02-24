@@ -4,6 +4,10 @@
     "workspaces": [
         "sources/*"
     ],
+    "scripts": {
+    "start:auth": "pnpm -F @learn-micro-service/auth run start",
+    "start:all": "pnpm -F 'apps/*' run start"
+  },
     "version": "1.0.0",
     "description": "",
     "main": "index.js",

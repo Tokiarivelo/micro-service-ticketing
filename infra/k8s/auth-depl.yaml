@@ -1,3 +1,4 @@
+# deployement : image k8s
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,8 +15,16 @@ spec:
     spec:
       containers:
         - name: auth
-          image: rallycoding/auth
+          image: auth # image docker
+          # if command: kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
+          env:
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
+# service : network
 apiVersion: v1
 kind: Service
 metadata:
@@ -26,5 +35,5 @@ spec:
   ports:
     - name: auth
       protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 3005 # port du host
+      targetPort: 3000 # port du container
