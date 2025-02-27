@@ -4,5 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const configs = {
+  port: process.env.PORT,
   jwtKey: process.env.JWT_KEY,
+  mongoDbUrl: process.env.MONGO_DB_URL,
 };
