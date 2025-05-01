@@ -1,18 +1,33 @@
 services:
+  client:
+    build:
+      context: ./sources/client
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001" # 3001 in host ----> 3001 in container
+    volumes:
+      - ./sources/client:/app
+      - /app/node_modules
+    depends_on:
+      - auth-mongo
+    networks:
+      - ticketing
+
   auth:
+    env_file:
+        - sources/auth/.env # Spécifie le fichier .env à utiliser
     build:
       context: ./sources/auth
       dockerfile: Dockerfile
     ports:
-      - "3005:3000"
+      - "3005:3000" # 3005 in host ----> 3000 in container
     volumes:
       - ./sources/auth:/app
       - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=mongodb://mongo:27017/app_db
     depends_on:
       - auth-mongo
+    networks:
+      - ticketing
 
   auth-mongo:
     image: mongo:6
@@ -20,6 +35,13 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - ticketing
+
 
 volumes:
   mongo_data:
+
+networks:
+  ticketing:
+    external: true

@@ -1,3 +1,4 @@
+// abstract: like an interface, required to implement other abstract methods and props
 export abstract class CustomError extends Error {
   abstract statusCode: number;
 
