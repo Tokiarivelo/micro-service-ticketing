@@ -16,3 +16,12 @@ build:
         manual:
           - src: 'src/**/*.ts' # path à watcher
             dest: .
+
+    - image: client # image docker
+      context: sources/client # chemin du source
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'app/**/*.*' # path à watcher
+            dest: .

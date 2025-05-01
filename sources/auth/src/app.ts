@@ -1,6 +1,5 @@
 import express, { json } from 'express';
 import 'express-async-errors';
-import mongoose from 'mongoose';
 import cookieSession from 'cookie-session';
 
 import { currentUserRouter } from './routes/current-user';
@@ -17,6 +16,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
+    // secure: configs.nodeEnv !== 'test',
     secure: false,
   })
 );
